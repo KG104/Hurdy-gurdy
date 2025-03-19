@@ -129,8 +129,18 @@ bool HurdygurdyAudioProcessor::isBusesLayoutSupported (const BusesLayout& layout
 }
 #endif
 
+void HurdygurdyAudioProcessor::addMidiBufferToProcess (const juce::MidiBuffer& buffer)
+{
+    incomingMidi.clear();
+    incomingMidi.addEvents(buffer, 0, buffer.getNumEvents(), 0);
+}
+
+
 void HurdygurdyAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    midiMessages.addEvents(incomingMidi, 0, -1, 0);
+    incomingMidi.clear();
+
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();

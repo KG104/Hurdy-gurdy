@@ -52,8 +52,11 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    void addMidiBufferToProcess (const juce::MidiBuffer& buffer);
 
 private:
     //==============================================================================
+    juce::MidiBuffer incomingMidi;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HurdygurdyAudioProcessor)
 };
